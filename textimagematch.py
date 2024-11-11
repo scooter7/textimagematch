@@ -39,8 +39,7 @@ def fetch_image_from_github(image_name):
         st.error(f"Failed to fetch image {image_name} from GitHub.")
         return None
 
-# Function to generate image description (prevent hashing the image argument)
-@st.cache_resource
+# Function to generate image description (no caching to ensure unique processing)
 def generate_image_description(_image):
     inputs = processor(images=_image, return_tensors="pt")
     out = model.generate(**inputs)
@@ -86,6 +85,7 @@ if user_text:
         for image_name in image_filenames:
             image = fetch_image_from_github(image_name)
             if image:
+                # Generate a unique description for each image
                 description = generate_image_description(image)
                 if description:
                     image_descriptions.append(f"Image {image_name}: {description}")
