@@ -90,8 +90,11 @@ if user_text:
                 if description:
                     image_descriptions.append(f"Image {image_name}: {description}")
                     st.image(image, caption=f"{image_name} - {description}")
+                    st.write(f"Description for {image_name}: {description}")  # Debug line to verify description
                 else:
                     st.warning(f"No description generated for {image_name}.")
+            else:
+                st.error(f"Failed to fetch image {image_name}.")
 
         # Query the best match using OpenAI
         if image_descriptions:
