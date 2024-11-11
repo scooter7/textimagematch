@@ -50,8 +50,8 @@ def generate_image_description(_image):
 # Function to evaluate the best image match
 def evaluate_best_match(user_text, image_descriptions):
     prompt = f"Given the user's text: '{user_text}', choose the best matching image from the following descriptions and provide a rationale: {image_descriptions}"
-    response = openai.chat.completions.create(
-        engine="text-davinci-003",
+    response = openai.Completion.create(
+        model="text-davinci-003",
         prompt=prompt,
         max_tokens=150
     )
