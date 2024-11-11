@@ -53,8 +53,8 @@ def evaluate_best_match(user_text, image_descriptions):
         {"role": "system", "content": "You are an assistant that matches user text to the best image based on descriptions."},
         {"role": "user", "content": f"Given the user's text: '{user_text}', choose the best matching image from the following descriptions and provide a rationale: {image_descriptions}"}
     ]
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Use a supported chat model
+    response = openai.chat.completions.create(
+        model="gpt-4o-mini",  # Correct syntax for using gpt-4o-mini
         messages=messages,
         max_tokens=150
     )
