@@ -58,7 +58,16 @@ def evaluate_best_match(user_text, image_descriptions):
         messages=messages,
         max_tokens=150
     )
-    return response["choices"][0]["message"]["content"].strip()
+    
+    # Debug: Output the entire response to check the format
+    st.write("API Response:", response)
+    
+    # Ensure the response structure is as expected
+    try:
+        return response["choices"][0]["message"]["content"].strip()
+    except (KeyError, IndexError):
+        st.error("Unexpected response format from OpenAI.")
+        return "Could not retrieve a valid response."
 
 # Streamlit app
 st.title("Image-Text Matching AI")
