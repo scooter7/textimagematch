@@ -49,13 +49,16 @@ def generate_image_description(_image):
 
 # Function to evaluate the best image match
 def evaluate_best_match(user_text, image_descriptions):
-    prompt = f"Given the user's text: '{user_text}', choose the best matching image from the following descriptions and provide a rationale: {image_descriptions}"
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
+    messages = [
+        {"role": "system", "content": "You are an assistant that matches user text to the best image based on descriptions."},
+        {"role": "user", "content": f"Given the user's text: '{user_text}', choose the best matching image from the following descriptions and provide a rationale: {image_descriptions}"}
+    ]
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Use a supported chat model
+        messages=messages,
         max_tokens=150
     )
-    return response["choices"][0]["text"].strip()
+    return response["choices"][0]["message"]["content"].strip()
 
 # Streamlit app
 st.title("Image-Text Matching AI")
