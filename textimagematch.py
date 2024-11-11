@@ -54,10 +54,8 @@ st.write("This app will find the best image to pair with your text from a folder
 user_text = st.text_input("Enter the text you want to pair with an image:")
 
 if user_text:
-    # List of image filenames in the GitHub folder
-    image_filenames = [
-        os.path.basename(url) for url in requests.get(f"{GITHUB_FOLDER_URL}/").text.split() if url.endswith(('.jpg', '.jpeg', '.png'))
-    ]
+    # Simulate fetching a list of image filenames (for demonstration purposes)
+    image_filenames = ["image1.jpg", "image2.png", "image3.jpeg"]  # Replace with actual filenames from GitHub
 
     # Generate descriptions for each image and display them
     image_descriptions = []
@@ -65,8 +63,11 @@ if user_text:
         image = fetch_image_from_github(image_name)
         if image:
             description = generate_image_description(image)
-            image_descriptions.append(f"Image {image_name}: {description}")
-            st.image(image, caption=f"{image_name} - {description}")
+            if description:
+                image_descriptions.append(f"Image {image_name}: {description}")
+                st.image(image, caption=f"{image_name} - {description}")
+            else:
+                st.warning(f"No description generated for {image_name}.")
 
     # Query the best match using OpenAI
     if image_descriptions:
