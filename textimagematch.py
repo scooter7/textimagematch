@@ -58,17 +58,15 @@ def evaluate_best_match(user_text, image_descriptions):
         messages=messages,
         max_tokens=150
     )
-
-    # Convert response to a dictionary if needed
-    response_dict = dict(response)
     
     # Debug: Output the entire response to check the format
-    st.write("API Response:", response_dict)
-    
+    st.write("API Response:", response)
+
     # Ensure the response structure is as expected
     try:
-        return response_dict["choices"][0]["message"]["content"].strip()
-    except (KeyError, IndexError):
+        # Access the message content using attributes
+        return response.choices[0].message["content"].strip()
+    except (AttributeError, IndexError):
         st.error("Unexpected response format from OpenAI.")
         return "Could not retrieve a valid response."
 
